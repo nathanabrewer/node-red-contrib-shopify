@@ -1,0 +1,36 @@
+
+<script type="text/x-red" data-template-name="shopify-customer">
+        <div class="form-row">
+            <input type="text" id="node-input-authorization">
+        </div>
+</script>
+
+<script type="text/x-red" data-help-name="shopify-customer">
+    <h2>shopify-customer</h2>
+    <p>msg.topic to be create, update, or lookup</p>
+    <p>.....TODO:DOC</p>
+    <br/>
+</script>
+
+<script type="text/javascript">
+
+    var currentNode;
+    var selectedAccount;
+
+    RED.nodes.registerType('shopify-customer',{
+        category: 'shopify',      // the palette category
+        color:"#FFFFFF",
+        defaults: {
+            authorization: {value:"", type:"shopify-authorization"},
+        },
+        inputs:1,               // set the number of inputs - only 0 or 1
+        outputs:2,              // set the number of outputs - 0 to n
+        icon: "myicon.jpg",     // saved in  icons/myicon.png
+        label: function() {
+                return "Customer";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>

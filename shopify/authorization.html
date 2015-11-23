@@ -1,0 +1,42 @@
+<script type="text/x-red" data-template-name="shopify-authorization">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-shop"><i class="fa fa-tag"></i> Shop</label>
+        <input type="text" id="node-config-input-shop" placeholder="yourshop.myshopify.com">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-token"><i class="fa fa-tasks"></i> Token</label>
+        <input type="text" id="node-config-input-token" placeholder="X-Shopify-Access-Token">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-token"><i class="fa fa-tasks"></i> API KEY</label>
+        <input type="text" id="node-config-input-apikey" placeholder="key">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-token"><i class="fa fa-tasks"></i> API SECRET</label>
+        <input type="text" id="node-config-input-apisecret" placeholder="secret">
+    </div>        
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('shopify-authorization',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            shop:{value:""},
+            token:{value:""},
+            apikey:{value:""},  //TODO: REMOVE
+            apisecret:{value:""}//TODO: REMOVE
+        },
+        label: function() {
+            if (this.name) {
+                return this.name;
+            } else {
+                return "Shopify Authorization";
+            }
+        }
+    });
+</script>

@@ -1,0 +1,32 @@
+{
+  "name": "node-red-contrib-shopify",
+  "version": "0.0.4",
+  "description": "nodejs node for shopify",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "shopify-node-api": "latest",
+    "when": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nathanabrewer/node-red-contrib-shopify"
+  },
+  "license": "Apache",
+  "keywords": [
+    "shopify"
+  ],
+  "node-red": {
+    "nodes": {
+      "shopify-authorization": "shopify/authorization.js",
+      "shopify-article": "shopify/article.js",
+      "shopify-customer": "shopify/customer.js",
+      "shopify-webhook": "shopify/webhook.js"
+    }
+  },
+  "author": {
+    "name": "Nathan Brewer",
+    "email": "nathan.a.brewer@dftz.org",
+    "url": "http://dftz.org"
+  },
+  "homepage": "https://github.com/nathanabrewer/node-red-contrib-shopify"
+}

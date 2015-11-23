@@ -1,0 +1,175 @@
+
+<script type="text/x-red" data-template-name="shopify-webhook">
+        <div class="form-row">
+            <input type="text" id="node-input-authorization">
+        </div>
+
+        <div class="form-row">
+            <select id="node-input-webhook_event">
+                <option>app/uninstalled</option>
+                <option>carts/reate</option>
+                <option>carts/update</option>
+                <option>checkouts/create</option>
+                <option>checkouts/update</option>
+                <option>checkouts/delete</option>
+                <option>collections/create</option>
+                <option>collections/update</option>
+                <option>customer_groups/create</option>
+                <option>customer_groups/update</option>
+                <option>customer_groups/delete</option>
+                <option>customers/create</option>
+                <option>customers/delete</option>
+                <option>customers/disable</option>
+                <option>customers/enable</option>
+                <option>customers/update</option>
+                <option>disputes/create</option>
+                <option>disputes/update</option>
+                <option>fulfillments/create</option>
+                <option>fulfillments/update</option>
+                <option>orders/create</option>
+                <option>orders/delete</option>
+                <option>orders/updated</option>
+                <option>orders/paid</option>
+                <option>orders/cancelled</option>
+                <option>orders/fulfilled</option>
+                <option>orders/partially_fulfilled</option>
+                <option>order_transaction/create</option>
+                <option>products/create</option>
+                <option>products/update</option>
+                <option>products/delete</option>
+                <option>refunds/create</option>
+                <option>shop/update</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <p>Enabled?</p>
+            <input type="checkbox" id="node-input-enabled">
+        </div>
+        <div class="form-row">
+            <p>list of metafield namespaces to have shopify include</p>
+            <input type="text" id="node-input-metafields" placeholder="google,alkylol">
+        </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="shopify-webhook">
+    <h2>shopify-webhook</h2>
+    <p>Initiate a webhook with your shopify account</p>
+</script>
+
+<script type="text/javascript">
+
+    var currentNode;
+    var selectedAccount;
+    var webhook_events = [
+        {topic: 'app',
+         options: [
+            {topic_event:'uninstalled'}
+         ]
+        },
+        {topic: 'carts',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'}
+         ]
+        },
+        {topic: 'checkouts',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'},
+            {topic_event:'delete'}
+         ]
+        },
+        {topic: 'collections',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'},
+            {topic_event:'delete'}
+         ]
+        },
+        {topic: 'customer_groups',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'},
+            {topic_event:'delete'}
+         ]
+        },
+        {topic: 'customers',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'delete'},
+            {topic_event:'disable'},
+            {topic_event:'enable'},
+            {topic_event:'update'}
+         ]
+        },
+        {topic: 'disputes',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'}
+         ]
+        },
+        {topic: 'fulfillments',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'}
+         ]
+        },
+        {topic: 'orders',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'delete'},
+            {topic_event:'updated'},
+            {topic_event:'paid'},
+            {topic_event:'cancelled'},
+            {topic_event:'fulfilled'},
+            {topic_event:'partially_fulfilled'}
+         ]
+        },
+        {topic: 'order_transaction',
+         options: [
+            {topic_event:'create'}
+         ]
+        },
+        {topic: 'products',
+         options: [
+            {topic_event:'create'},
+            {topic_event:'update'},
+            {topic_event:'delete'}
+         ]
+        },
+        {topic: 'refunds',
+         options: [
+            {topic_event:'create'}
+         ]
+        },
+        {topic: 'shop',
+         options: [
+            {topic_event:'update'}
+         ]
+        }
+    ];
+
+    RED.nodes.registerType('shopify-webhook',{
+        category: 'shopify',      // the palette category
+        color:"#FFFFFF",
+        defaults: {
+            authorization: {value:"", type:"shopify-authorization"},
+            webhook_event: {value:"", type:"text"},
+            metafields: {value:"", type:"text"},
+            name: {value:"", type:"text"},
+            enabled: {value:0, type:"text"}
+
+        },
+        inputs:0,               
+        outputs:2,          
+        icon: "myicon.jpg",
+        label: function() {
+            return (this.name != '') ? this.name : this.webhook_event;
+                return "Event";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>
