@@ -3,21 +3,29 @@ module.exports = function(RED) {
     "use strict";
 
     function shopifyWebhook(n) {
+
         RED.nodes.createNode(this,n);  
+
+        if(typeof RED.settings.functionGlobalContext.baseURL === undefined)
+          return console.log("Error... set baseURL under functionGlobalContext");
+
         var auth = RED.nodes.getNode(n.authorization);
         var node = this;
+        var baseURL = RED.settings.functionGlobalContext.baseURL;
         node.shopifyClient = auth.getShopifyClient();
         node.webhook_id = null;
 
         var urlSuffix = "/shopify-webhook/"+this.id;
-        var url = "https://alky.lol/api"+urlSuffix;
+        var url = baseURL+urlSuffix;
         var topic = n.webhook_event;
         var createWebhook = true;
         var remove_webhook_ids = [];
         //do we have this webhook?
         node.shopifyClient.get('/admin/webhooks.json', function(err, data){
             if(err) console.log(err);
-            console.log('['+node.id+'] Looking for existing hooks ', data);
+            console.log('['+node.id+'] Looking for existing hooks');
+            
+            if(typeof data.webhooks !== 'undefined'){
 
             data.webhooks.forEach(function(webhook){
               if(webhook.address == url){
@@ -31,6 +39,7 @@ module.exports = function(RED) {
             });
 
             if(createWebhook){
+              console.log('['+node.id+'] Create Webhook '+topic);
               node.shopifyClient.post('/admin/webhooks.json', { "webhook": { "topic": topic, "address": url, "format": "json" }}, function(err, data, headers){
                   console.log(data);
                   if(err){
@@ -39,6 +48,8 @@ module.exports = function(RED) {
                   node.status({fill:"red",shape:"ring",text:"Creation Successful "+data.webhook.id});
               });
 
+            }else{
+              console.log('['+node.id+'] Webhooks already exist for '+topic);
             }
 
             remove_webhook_ids.forEach(function(webhook_id){
@@ -46,11 +57,12 @@ module.exports = function(RED) {
                 if(err){
                   console.log("error removing webhook ", err);
                 }
-                console.log('Removed Webhook '+webhook_id);
+                console.log('['+node.id+'] REMOVING UNWANTED WEBHOOKS '+webhook_id);
+                
               });              
             });
 
-
+          }
         });
 
         this.errorHandler = function(err,req,res,next) {
@@ -75,7 +87,7 @@ module.exports = function(RED) {
         };
 
         var httpMiddleware = function(req,res,next) { next(); }
-        console.log('INITIALIZING ULR: ', urlSuffix);
+        console.log('INITIALIZING WEBHOOK POST URL: ', url);
         RED.httpNode.post(urlSuffix,httpMiddleware,this.callback,this.errorHandler );
 
         this.on("close",function() {

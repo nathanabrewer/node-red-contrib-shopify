@@ -5,7 +5,6 @@ module.exports = function(RED) {
 
     var shopifyAPI = require('shopify-node-api');
 
-
     function shopifyAuthorization(config) {
         // Create a RED node
         RED.nodes.createNode(this,config);
@@ -16,7 +15,7 @@ module.exports = function(RED) {
                 shopify_api_key: config.apikey,           //TODO: REMOVE
                 shopify_shared_secret: config.apisecret,  //TODO: REMOVE
                 shopify_scope: "write_content, write_themes, write_products, write_customers, write_orders, write_script_tags, write_fulfillments, write_shipping",
-                verbose: true,
+                verbose: false,
                 access_token: config.token
             });
 

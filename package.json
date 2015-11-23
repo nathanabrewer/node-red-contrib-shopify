@@ -20,7 +20,8 @@
       "shopify-authorization": "shopify/authorization.js",
       "shopify-article": "shopify/article.js",
       "shopify-customer": "shopify/customer.js",
-      "shopify-webhook": "shopify/webhook.js"
+      "shopify-webhook": "shopify/webhook.js",
+      "shopify-script": "shopify/script.js"
     }
   },
   "author": {
