@@ -2,11 +2,15 @@
 <script type="text/x-red" data-template-name="shopify-script">
     <div class="form-row">
         <input type="text" id="node-input-authorization">
-    </div>
+    </div>    
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="common.label.name"></span></label>
         <input type="text" id="node-input-name" data-i18n="[placeholder]common.label.name">
     </div>
+        <div class="form-row">
+            <p>Enabled?</p>
+            <input type="checkbox" id="node-input-enabled">
+        </div>    
     <div class="form-row" style="margin-bottom: 0px;">
         <label for="node-input-func"><i class="fa fa-wrench"></i> <span data-i18n="function.label.function"></span></label>
         <input type="hidden" id="node-input-customscript" autofocus="autofocus">
@@ -32,6 +36,7 @@
         defaults: {
             name: {value:""},
             authorization: {value:"", type:"shopify-authorization"},
+            enabled: {value:0, type:"text"},
             customscript: {value:"\nconsole.log('SCRIPT SUCCESS'); \n\n "},
             noerr: {value:0,required:true,validate:function(v){ return ((!v) || (v === 0)) ? true : false; }}
         },

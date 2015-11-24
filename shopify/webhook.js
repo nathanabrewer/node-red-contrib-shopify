@@ -6,12 +6,12 @@ module.exports = function(RED) {
 
         RED.nodes.createNode(this,n);  
 
-        if(typeof RED.settings.functionGlobalContext.baseURL === undefined)
-          return console.log("Error... set baseURL under functionGlobalContext");
-
         var auth = RED.nodes.getNode(n.authorization);
+
+        var baseURL = 'https://'+auth.shop+'.alky.lol';
+
         var node = this;
-        var baseURL = RED.settings.functionGlobalContext.baseURL;
+        
         node.shopifyClient = auth.getShopifyClient();
         node.webhook_id = null;
 
@@ -91,10 +91,8 @@ module.exports = function(RED) {
         RED.httpNode.post(urlSuffix,httpMiddleware,this.callback,this.errorHandler );
 
         this.on("close",function() {
-            var node = this;
-
             RED.httpNode._router.stack.forEach(function(route,i,routes) {
-                if (route.route && route.route.path === node.urlSuffix && route.route.methods[node.method]) {
+                if (route.route && route.route.path === urlSuffix) {
                     routes.splice(i,1);
                 }
             });

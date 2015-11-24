@@ -10,6 +10,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
 
+        node.shop = config.shop.split(".")[0];
+        
         var ShopifyClient = new shopifyAPI({
                 shop: config.shop, 
                 shopify_api_key: config.apikey,           //TODO: REMOVE
